@@ -200,3 +200,22 @@ Cart
   justify-content: space-between;
   margin-top: 1rem;
 }
+
+.clear-btn,
+.confirm-btn {
+  background: transparent;
+  padding: 0.5rem 1rem;
+  color: var(--clr-red-dark);
+  border: 1px solid var(--clr-red-dark);
+  margin-top: 2.25rem;
+  border-radius: var(--radius);
+}
+.clear-btn:hover {
+  background: var(--clr-red-light);
+  color: var(--clr-red-dark);
+  border-color: var(--clr-red-light);
+}
+.confirm-btn {
+  border-color: var(--clr-primary);
+  color: var(--clr-primary);
+}
