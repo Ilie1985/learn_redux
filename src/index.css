@@ -261,3 +261,17 @@ Cart Item
 .remove-btn:hover {
   color: var(--clr-primary-light);
 }
+
+
+.amount-btn {
+  width: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.amount-btn svg {
+  color: var(--clr-primary);
+}
+.amount-btn:hover svg {
+  color: var(--clr-primary-light);
+}
