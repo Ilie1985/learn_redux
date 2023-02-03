@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { computeHeadingLevel } from "@testing-library/react";
 import cartItems from "../../cartItems";
 
 const initialState = {
@@ -15,10 +16,16 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.cartItems = [];
     },
+    removeItem: (state, action) => {
+      const itemId = action.payload;
+      state.cartItems = state.cartItems.filter((item) => {
+        return item.id !== itemId;
+      });
+    },
   },
 });
 // console.log("cartslice log",cartSlice);
 
-export const { clearCart } = cartSlice.actions;
+export const { clearCart, removeItem } = cartSlice.actions;
 
 export default cartSlice.reducer;
