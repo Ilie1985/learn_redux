@@ -8,7 +8,6 @@ const Navbar = () => {
 
 
 
-
   return (
     <nav>
       <div className="nav-center">
