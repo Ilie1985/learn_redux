@@ -6,6 +6,9 @@ const Navbar = () => {
     return store.cart.amount;
   });
 
+
+
+
   return (
     <nav>
       <div className="nav-center">
