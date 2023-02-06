@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
-// import cartItems from "../../cartItems";
+// import { openModal } from "../modal/modalSlice";
+import axios from "axios";
 
 const url = "https://course-api.com/react-useReducer-cart-project";
 
@@ -11,15 +11,22 @@ const initialState = {
   isLoading: true,
 };
 
-export const getCartItems = createAsyncThunk("cart/getCartItems", () => {
-  return fetch(url)
-    .then((resp) => {
-      resp.json();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+export const getCartItems = createAsyncThunk(
+  "cart/getCartItems",
+  async (name, thunkAPI) => {
+    try {
+      // console.log("NAME", name);
+      // console.log("THUNKAPI", thunkAPI);
+      // console.log("THUNKAPISTATE", thunkAPI.getState());
+      // thunkAPI.dispatch(openModal());
+
+      const response = await axios(url);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue("something went wrong");
+    }
+  }
+);
 
 const cartSlice = createSlice({
   name: "cart",
@@ -57,21 +64,23 @@ const cartSlice = createSlice({
       state.total = total;
     },
   },
-  extraReducers: {
-    [getCartItems.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [getCartItems.fulfilled]: (state, action) => {
-      console.log("ACTION", action);
-      state.isLoading = false;
-      state.cartItems = action.payload;
-    },
-    [getCartItems.rejected]: (state) => {
-      state.isLoading = false;
-    },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(getCartItems.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getCartItems.fulfilled, (state, action) => {
+        console.log("ACTION", action);
+        state.isLoading = false;
+        state.cartItems = action.payload;
+      })
+      .addCase(getCartItems.rejected, (state, action) => {
+        console.log("logged action", action);
+        state.isLoading = false;
+      });
   },
 });
-// console.log("cartslice log",cartSlice);
 
 export const { clearCart, removeItem, increase, decrease, calculateTotals } =
   cartSlice.actions;
