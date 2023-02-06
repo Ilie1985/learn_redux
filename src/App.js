@@ -4,9 +4,10 @@ import CartContainer from "./components/CartContainer";
 import { useSelector, useDispatch } from "react-redux";
 import { calculateTotals } from "./features/cart/cartSlice";
 import Modal from "./components/Modal";
+import { getCartItems } from "./features/cart/cartSlice";
 
 function App() {
-  const { cartItems } = useSelector((store) => {
+  const { cartItems, isLoading } = useSelector((store) => {
     return store.cart;
   });
 
@@ -18,8 +19,23 @@ function App() {
 
   useEffect(() => {
     dispatch(calculateTotals());
+
     //eslint-disable-next-line
   }, [cartItems]);
+
+  useEffect(() => {
+    dispatch(getCartItems());
+
+    //eslint-disable-next-line
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="loading">
+        <h1>Loading...</h1>
+      </div>
+    );
+  }
 
   return (
     <main>
